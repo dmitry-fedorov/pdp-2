@@ -1,0 +1,15 @@
+.row
+  h1 align="center" Companies
+
+.row
+  - companies.each do |company|
+    .large-3.medium-6.columns
+      h3 = link_to company.name, company_path(company)
+      = "Owner: #{company.owner_full_name}"
+      br
+      - if user_signed_in? && policy(company).manage?
+        => link_to "Edit", edit_company_path(company)
+        = link_to "Delete", company_path(company), method: :delete, data: { confirm: "Are you sure?" }
+
+- content_for :links do
+  = active_link_to "Create company", new_company_path, active: :exclusive, wrap_tag: :li

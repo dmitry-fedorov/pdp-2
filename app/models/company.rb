@@ -3,5 +3,5 @@ class Company < ActiveRecord::Base
   has_one :blog, dependent: :destroy
   belongs_to :owner, class_name: "User"
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end

@@ -1,0 +1,7 @@
+.row
+  .medium-6.columns
+    = simple_form_for(company) do |f|
+      .form_inputs
+        = f.input :name
+      .form-actions
+        = f.button :submit, "Submit"

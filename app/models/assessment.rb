@@ -2,5 +2,5 @@ class Assessment < ActiveRecord::Base
   belongs_to :article
   belongs_to :user
 
-  validates :assessment, numericality: { greather_than: 0, less_than: 6 }
+  validates :assessment, inclusion: [0..5], allow_nil: true
 end
