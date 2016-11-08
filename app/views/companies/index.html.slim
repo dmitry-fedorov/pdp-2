@@ -4,7 +4,7 @@
 .row
   - companies.each do |company|
     .large-3.medium-6.columns
-      h3 = link_to company.name, company_path(company)
+      h3 = link_to company.name, company_users_url(subdomain: company.domain)
       = "Owner: #{company.owner_full_name}"
       br
       - if user_signed_in? && policy(company).manage?

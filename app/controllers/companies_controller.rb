@@ -2,7 +2,7 @@ class CompaniesController < ApplicationController
   before_action :authenticate_user!, only: %i(new create edit update destroy)
   before_action :authorize_user!, only: %i(edit update destroy)
 
-  expose :company
+  expose :company, -> { Company.find_by(domain: request.subdomain) }
   expose :companies, -> { Company.all.includes(:owner) }
 
   def index
