@@ -2,11 +2,10 @@ class CompaniesController < ApplicationController
   before_action :authenticate_user!, only: %i(new create edit update destroy)
   before_action :authorize_user!, only: %i(edit update destroy)
 
-  expose(:company, attributes: :company_params)
-  expose(:companies)
+  expose :company
+  expose :companies, -> { Company.all }
 
   def index
-    self.companies = fetch_companies(companies)
   end
 
   def show
@@ -39,9 +38,5 @@ class CompaniesController < ApplicationController
 
   def company_params
     params.require(:company).permit(:name)
-  end
-
-  def fetch_companies(scope)
-    scope.includes(:owner).decorate
   end
 end
