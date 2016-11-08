@@ -4,4 +4,6 @@ class Company < ActiveRecord::Base
   belongs_to :owner, class_name: "User"
 
   validates :name, presence: true, uniqueness: true
+
+  delegate :full_name, to: :owner, prefix: true
 end

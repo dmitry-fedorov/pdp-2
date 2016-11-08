@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
   before_action :authorize_user!, only: %i(edit update destroy)
 
   expose :company
-  expose :companies, -> { Company.all }
+  expose :companies, -> { Company.all.includes(:owner) }
 
   def index
   end

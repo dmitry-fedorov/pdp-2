@@ -1,2 +1,4 @@
 .row
-  = company.users.each(&:full_name)
+  - company.users.each  do |user|
+    = user.full_name
+    br
