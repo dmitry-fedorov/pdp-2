@@ -3,9 +3,10 @@ class CompaniesController < ApplicationController
   before_action :authorize_user!, only: %i(edit update destroy)
 
   expose(:company, attributes: :company_params)
-  expose_decorated(:companies) { |scope| fetch_companies(scope) }
+  expose(:companies)
 
   def index
+    self.companies = fetch_companies(companies)
   end
 
   def show
@@ -41,6 +42,6 @@ class CompaniesController < ApplicationController
   end
 
   def fetch_companies(scope)
-    scope.includes(:owner)
+    scope.includes(:owner).decorate
   end
 end
