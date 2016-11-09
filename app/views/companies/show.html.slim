@@ -1,4 +1,7 @@
 .row
+  - if user_signed_in? && policy(company).manage?
+    => link_to "Edit", edit_company_path(company)
+    = link_to "Delete", company_path(company), method: :delete, data: { confirm: "Are you sure?" }
   - company.users.each do |user|
     = user.full_name
     br
