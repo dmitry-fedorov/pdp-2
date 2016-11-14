@@ -1,7 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :authenticate_user!, only: %i(new create edit update destroy)
   before_action :authorize_user!, only: %i(edit update destroy)
-  before_action :authenticate_company!, only: %i(show edit update destroy)
 
   expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
   expose :companies, -> { Company.all.includes(:owner) }
@@ -45,11 +44,5 @@ class CompaniesController < ApplicationController
 
   def company_params
     params.fetch(:company, {}).permit(:name, :domain)
-  end
-
-  def authenticate_company!
-    return if request.subdomain.present? && company.persisted?
-
-    redirect_to root_url(subdomain: nil), alert: t("flash.companies_auth.alert", subdomain: request.subdomain)
   end
 end
