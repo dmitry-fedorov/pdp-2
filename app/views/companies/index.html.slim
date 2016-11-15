@@ -1,6 +1,12 @@
 .row
-  h1 align="center" Companies
+  h1 align="center" Your Company
+.row
+  - if current_user.company
+    h3 = link_to current_user.company.name, company_users_url(subdomain: current_user.company.domain)
+    = "Owner: #{current_user.company.owner_full_name}"
 
+.row
+  h1 align="center" Companies
 .row
   - companies.each do |company|
     .large-3.medium-6.columns
@@ -8,4 +14,5 @@
       = "Owner: #{company.owner_full_name}"
 
 - content_for :links do
-  = active_link_to "Create company", new_company_url(subdomain: nil), active: :exclusive, wrap_tag: :li
+  - if current_user.company.blank?
+    = active_link_to "Create company", new_company_url(subdomain: nil), active: :exclusive, wrap_tag: :li

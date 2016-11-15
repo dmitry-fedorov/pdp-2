@@ -1,6 +1,7 @@
 class CompaniesController < ApplicationController
   before_action :authenticate_user!, only: %i(new create edit update destroy)
-  before_action :authorize_user!, only: %i(edit update destroy)
+  before_action :authorize_user_management!, only: %i(edit update destroy)
+  before_action :authorize_user_creation!, only: %i(new create)
 
   expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
   expose :companies, -> { Company.all.includes(:owner) }
@@ -12,11 +13,14 @@ class CompaniesController < ApplicationController
   end
 
   def new
+    authorize company
   end
 
   def create
     company.owner = current_user
-    company.save
+    if company.save
+      current_user.update(company: company)
+    end
 
     respond_with company, location: company_users_url(subdomain: company.domain)
   end
@@ -38,8 +42,12 @@ class CompaniesController < ApplicationController
 
   private
 
-  def authorize_user!
+  def authorize_user_management!
     authorize(company, :manage?)
+  end
+
+  def authorize_user_creation!
+    authorize(company, :create?)
   end
 
   def company_params
