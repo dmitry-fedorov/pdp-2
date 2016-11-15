@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_company!
-    return if request.subdomain.blank? || Company.exists?(domain: request.subdomain)
+    return if !Subdomain.matches?(request) || Company.exists?(domain: request.subdomain)
 
     redirect_to companies_url(subdomain: nil), alert: t("flash.companies_auth.alert", subdomain: request.subdomain)
   end
