@@ -3,5 +3,7 @@ class Company < ActiveRecord::Base
   has_one :blog, dependent: :destroy
   belongs_to :owner, class_name: "User"
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, :domain, presence: true, uniqueness: true
+
+  delegate :full_name, to: :owner, prefix: true
 end
