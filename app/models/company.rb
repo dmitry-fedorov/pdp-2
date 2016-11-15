@@ -4,6 +4,7 @@ class Company < ActiveRecord::Base
   belongs_to :owner, class_name: "User"
 
   validates :name, :domain, presence: true, uniqueness: true
+  validates :domain, format: /\A[a-z0-9]+(_{1}[a-z0-9]+)*$\z/
 
   delegate :full_name, to: :owner, prefix: true
 end

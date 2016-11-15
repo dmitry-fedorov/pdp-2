@@ -10,7 +10,7 @@ feature "Domain spec" do
   scenario "User tries to visit non existing domain" do
     visit "http://nonexistingdomain.example.com/"
 
-    expect(current_url).to eq("http://example.com/")
+    expect(current_url).to eq("http://example.com/companies")
     expect(page).to have_content("Company with domain 'nonexistingdomain' does not exist.")
   end
 end
