@@ -5,6 +5,7 @@ class CompaniesController < ApplicationController
 
   expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
   expose :companies, -> { Company.all.includes(:owner) }
+  expose :invites, -> { Invite.where(user: current_user, status: %w(0 1)) }
 
   def index
   end

@@ -1,0 +1,7 @@
+= "#{@user.full_name} wants to join your company #{@company.name}"
+br
+= "Click on the link below if you want to invite him or decline invitation"
+br
+= link_to "Invite user", company_invitation_url(@company, invite_id: @invite.id, status: :accepted)
+br
+= link_to "Decline invitation", company_invitation_url(@company, invite_id: @invite.id, status: :declined)
