@@ -13,12 +13,7 @@ module Companies
 
     def invitation
       invite.update(status: params[:status])
-      if params[:status] == "accepted"
-        invite.user.update(company: company)
-        redirect_to company_users_url(subdomain: company.domain), notice: "User was successfully invited"
-      else
-        redirect_to companies_url(subdomain: nil), notice: "User invitation was declined"
-      end
+      update_user
     end
 
     private
@@ -26,6 +21,15 @@ module Companies
     def set_invite_params
       invite.company = company
       invite.user = current_user
+    end
+
+    def update_user
+      if params[:status] == "accepted"
+        invite.user.update(company: company)
+        redirect_to company_users_url(subdomain: company.domain), notice: "User was successfully invited"
+      else
+        redirect_to companies_url(subdomain: nil), notice: "User invitation was declined"
+      end
     end
   end
 end

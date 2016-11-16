@@ -14,14 +14,11 @@ class CompaniesController < ApplicationController
   end
 
   def new
-    authorize company
   end
 
   def create
     company.owner = current_user
-    if company.save
-      current_user.update(company: company)
-    end
+    current_user.update(company: company) if company.save
 
     respond_with company, location: company_users_url(subdomain: company.domain)
   end
