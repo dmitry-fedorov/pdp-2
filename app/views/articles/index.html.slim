@@ -1,0 +1,11 @@
+.row
+  h1 align="center" Articles
+
+.row
+  .medium-6.columns
+    = render articles
+
+  .medium-6.columns.end
+    - content_for :links do
+      - if user_signed_in?
+        = active_link_to "New article", new_article_path, active: :exclusive, wrap_tag: :li

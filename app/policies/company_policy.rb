@@ -6,4 +6,8 @@ class CompanyPolicy < ApplicationPolicy
   def create?
     user.company.blank?
   end
+
+  def company_user?
+    record == user.company
+  end
 end
