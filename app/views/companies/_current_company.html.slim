@@ -1,0 +1,5 @@
+.row
+    h1 align="center" = "#{prefix} Company"
+.row
+    h3 = link_to company.name, company_users_url(subdomain: company.domain)
+    = "Owner: #{company.owner_full_name}"
