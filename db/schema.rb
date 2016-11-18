@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115133128) do
+ActiveRecord::Schema.define(version: 20161118101205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,13 +19,13 @@ ActiveRecord::Schema.define(version: 20161115133128) do
   create_table "articles", force: :cascade do |t|
     t.string   "name",       null: false
     t.string   "text",       null: false
-    t.integer  "blog_id",    null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "company_id", null: false
   end
 
-  add_index "articles", ["blog_id"], name: "index_articles_on_blog_id", using: :btree
+  add_index "articles", ["company_id"], name: "index_articles_on_company_id", using: :btree
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "assessments", force: :cascade do |t|
@@ -38,15 +38,6 @@ ActiveRecord::Schema.define(version: 20161115133128) do
 
   add_index "assessments", ["article_id"], name: "index_assessments_on_article_id", using: :btree
   add_index "assessments", ["user_id"], name: "index_assessments_on_user_id", using: :btree
-
-  create_table "blogs", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "company_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "blogs", ["company_id"], name: "index_blogs_on_company_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.string   "text",       null: false
@@ -105,11 +96,10 @@ ActiveRecord::Schema.define(version: 20161115133128) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "articles", "blogs"
+  add_foreign_key "articles", "companies"
   add_foreign_key "articles", "users"
   add_foreign_key "assessments", "articles"
   add_foreign_key "assessments", "users"
-  add_foreign_key "blogs", "companies"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
 end

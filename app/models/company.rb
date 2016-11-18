@@ -1,7 +1,7 @@
 class Company < ActiveRecord::Base
   has_many :users, dependent: :destroy
   has_many :invites, dependent: :destroy
-  has_one :blog, dependent: :destroy
+  has_many :articles, dependent: :destroy
   belongs_to :owner, class_name: "User"
 
   validates :name, :domain, presence: true, uniqueness: true

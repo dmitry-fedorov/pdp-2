@@ -5,3 +5,7 @@
   - company.users.each do |user|
     = user.full_name
     br
+
+- content_for :links do
+  - if user_signed_in? && policy(company).company_user?
+    = active_link_to "Blog", articles_path, active: :exclusive, wrap_tag: :li
