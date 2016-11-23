@@ -5,4 +5,6 @@ class Article < ActiveRecord::Base
   has_many :comments, dependent: :destroy
 
   validates :name, :text, presence: true
+
+  delegate :owner, to: :company, prefix: true
 end
