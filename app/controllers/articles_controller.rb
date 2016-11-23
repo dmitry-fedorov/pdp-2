@@ -5,6 +5,8 @@ class ArticlesController < ApplicationController
   expose :company, -> { Company.find_by(domain: request.subdomain) }
   expose :article
   expose :articles, -> { company.articles.includes(:user) }
+  expose :comment, -> { article.comments.build }
+  expose :comments, -> { article.comments.includes(:user) }
 
   def index
   end

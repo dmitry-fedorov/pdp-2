@@ -1,0 +1,12 @@
+.comment-wrapper (data-behavior="comment-wrapper", data-id=comment.id)
+  strong Comment:
+  p = comment.text
+  ' Published by
+  => comment.user.full_name
+  = "at #{comment.created_at.to_s(:short)}"
+  br
+  - if user_signed_in? && policy(comment).manage?
+    = link_to "Delete", article_comment_path(article, comment),
+    class: "comment-destroy", method: :delete, remote: true,
+    data: { id: comment.id, behavior: "comment-destroy" }
+  br
