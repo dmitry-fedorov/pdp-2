@@ -15,6 +15,7 @@ module Articles
     end
 
     def update
+      render json: comment if comment.update(comment_params)
     end
 
     def destroy
