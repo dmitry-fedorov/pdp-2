@@ -5,13 +5,14 @@ class CompaniesController < ApplicationController
 
   expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
   expose :companies, -> { Company.all.includes(:owner) }
-  expose :users, -> { company.users.sort_by { |user| user.decorate.average_rating }.reverse }
+  expose :users, -> { company_users.sort_by { |user| user.decorate.average_rating }.reverse }
   expose :invites, -> { Invite.where(user: current_user, status: %w(0 1)) }
 
   def index
   end
 
   def show
+    search(params[:search]) if params[:search]
   end
 
   def new
@@ -51,5 +52,17 @@ class CompaniesController < ApplicationController
 
   def company_params
     params.fetch(:company, {}).permit(:name, :domain)
+  end
+
+  def company_users
+    if params[:search]
+      search(params[:search])
+    else
+      company.users
+    end
+  end
+
+  def search(query)
+    company.users.where("full_name LIKE ? OR email LIKE ?", "%#{query}%", "%#{query}%")
   end
 end
