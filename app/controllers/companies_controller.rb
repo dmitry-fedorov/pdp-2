@@ -12,7 +12,6 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    search(params[:search]) if params[:search]
   end
 
   def new
