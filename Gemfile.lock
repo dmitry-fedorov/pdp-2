@@ -265,6 +265,7 @@ GEM
     rake (11.2.2)
     rake-compiler (0.9.9)
       rake
+    ratyrate (1.2.2.alpha)
     ref (1.0.5)
     request_store (1.2.0)
     responders (2.1.1)
@@ -440,6 +441,7 @@ DEPENDENCIES
   rails (= 4.2.7.1)
   rails-erd
   rails_stdout_logging
+  ratyrate
   responders
   rollbar
   rspec-its

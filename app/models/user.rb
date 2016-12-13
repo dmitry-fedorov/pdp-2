@@ -4,9 +4,10 @@ class User < ActiveRecord::Base
 
   belongs_to :company
   has_many :articles, dependent: :destroy
-  has_many :assessments, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :invites, dependent: :destroy
 
   validates :full_name, presence: true
+
+  ratyrate_rater
 end
