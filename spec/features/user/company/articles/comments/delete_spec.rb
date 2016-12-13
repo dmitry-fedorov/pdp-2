@@ -14,7 +14,7 @@ feature "Delete comment" do
   end
 
   scenario "Comment disappears from page", js: true do
-    find(".comment-wrapper").click_on "Delete"
+    find(".comment-wrapper", text: comment.text).click_on "Delete"
 
     expect(page).not_to have_content(comment.text)
     within(".comment-wrapper") do

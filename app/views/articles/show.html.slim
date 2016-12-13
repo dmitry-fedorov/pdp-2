@@ -3,8 +3,8 @@
 
 .row
   .medium-6.columns
+    h3 Comments
     .comments-container (data-behavior="comments")
-      h3 Comments
       = render partial: "articles/comments/comment", collection: comments
 
     - if user_signed_in?
