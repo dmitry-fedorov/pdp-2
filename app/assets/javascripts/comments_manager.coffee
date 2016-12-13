@@ -19,27 +19,27 @@ class CommentsManager
     $(document).on "click", @ui.cancelLink, @_hideEditForm
 
   _destroyComment: (event) =>
-    comment_id = $(event.currentTarget).data("id")
-    $("#{@ui.commentWrapper}[data-id='#{comment_id}']").remove()
+    @_setCurrentElement(event, @ui.commentWrapper).remove()
 
   _addComment: (event, data, status, xhr) =>
-    $(@ui.comments).append xhr.responseText
+    $(@ui.comments).prepend xhr.responseText
     $(@ui.commentForm).find("#comment_text").val('')
 
   _showEditForm: (event) =>
-    comment_id = $(event.currentTarget).data("id")
-    $("#{@ui.commentEditForm}[data-id='#{comment_id}']").show()
+    @_setCurrentElement(event, @ui.commentEditForm).show()
     $(event.currentTarget).hide()
 
   _hideEditForm: (event) =>
-    comment_id = $(event.currentTarget).data("id")
-    $("#{@ui.commentEditForm}[data-id='#{comment_id}']").hide()
-    $("#{@ui.editLink}[data-id='#{comment_id}']").show()
+    @_setCurrentElement(event, @ui.commentEditForm).hide()
+    @_setCurrentElement(event, @ui.editLink).show()
 
   _updateComment: (event, data, status, xhr) =>
     @_hideEditForm(event)
+    @_setCurrentElement(event, @ui.commentWrapper).find("p").html(JSON.parse(xhr.responseText).text)
+
+  _setCurrentElement: (event, target) ->
     comment_id = $(event.currentTarget).data("id")
-    $("#{@ui.commentWrapper}[data-id='#{comment_id}']").find("p").html(JSON.parse(xhr.responseText).text)
+    $("#{target}[data-id='#{comment_id}']")
 
 if $("[data-behavior='comments']").length
   new CommentsManager
