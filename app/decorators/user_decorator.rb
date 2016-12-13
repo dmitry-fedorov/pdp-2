@@ -6,6 +6,12 @@ class UserDecorator < ApplicationDecorator
   end
 
   def average_rating
-    RatingCache.where(cacheable_id: object.articles.ids).average(:avg).round(2).to_digits
+    ratings = RatingCache.where(cacheable_id: object.articles.ids)
+
+    if ratings.present?
+      ratings.average(:avg).round(2).to_digits
+    else
+      "-"
+    end
   end
 end
