@@ -12,7 +12,7 @@
         th Article count
         th Average rating
     tbody
-      - company.users.each do |user|
+      - users.each do |user|
         tr
           td = user.full_name
           td = user.articles.count
