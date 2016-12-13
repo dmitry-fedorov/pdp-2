@@ -35,7 +35,7 @@ class CommentsManager
 
   _updateComment: (event, data, status, xhr) =>
     @_hideEditForm(event)
-    @_setCurrentElement(event, @ui.commentWrapper).find("p").html(JSON.parse(xhr.responseText).text)
+    @_setCurrentElement(event, @ui.commentWrapper).find("p").html(data.text)
 
   _setCurrentElement: (event, target) ->
     comment_id = $(event.currentTarget).data("id")

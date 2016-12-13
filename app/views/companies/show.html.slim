@@ -4,6 +4,9 @@
     => link_to "Edit", edit_company_path(company)
     = link_to "Delete", company_path(company), method: :delete, data: { confirm: "Are you sure?" }
     br
+  = render "search"
+
+.row
   h2 Users
   table
     thead
@@ -12,7 +15,7 @@
         th Article count
         th Average rating
     tbody
-      - company.users.each do |user|
+      - users.each do |user|
         tr
           td = user.full_name
           td = user.articles.count
