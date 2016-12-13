@@ -16,7 +16,7 @@
         tr
           td = user.full_name
           td = user.articles.count
-          td WIP
+          td = user.decorate.average_rating
     br
 
 - content_for :links do
