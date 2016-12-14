@@ -25,6 +25,7 @@ gem "simple_form"
 gem "slim"
 
 # all other gems
+gem "activeadmin", git: "https://github.com/activeadmin/activeadmin"
 gem "decent_decoration"
 gem "decent_exposure"
 gem "devise"

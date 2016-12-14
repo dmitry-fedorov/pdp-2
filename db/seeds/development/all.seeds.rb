@@ -1,4 +1,5 @@
 FactoryGirl.create(:user, email: "user@example.com")
+FactoryGirl.create(:user, email: "admin@example.com", role: :admin)
 
 3.times do
   owner = FactoryGirl.create(:user)
