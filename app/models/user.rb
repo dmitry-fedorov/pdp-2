@@ -9,5 +9,7 @@ class User < ActiveRecord::Base
 
   validates :full_name, presence: true
 
+  enum role: %i(user admin)
+
   ratyrate_rater
 end

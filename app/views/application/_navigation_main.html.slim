@@ -3,3 +3,5 @@
     li = link_to "Companies", companies_url(subdomain: nil)
     - if user_signed_in?
       = active_link_to "Home", root_path, active: :exclusive, wrap_tag: :li
+      - if current_user.admin?
+        = active_link_to "Admin interface", admin_root_path, active: :exclusive, wrap_tag: :li
