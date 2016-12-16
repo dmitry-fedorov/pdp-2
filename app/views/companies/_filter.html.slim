@@ -1,0 +1,14 @@
+h3 Filters:
+= form_tag(company_path(company), method: :get) do
+  .form_inputs.medium-4.columns
+    = label_tag "Search"
+    = text_field_tag :search
+  .form_inputs.medium-4.columns
+    = label_tag "Minimal rating"
+    = text_field_tag :filter
+  .form_inputs.medium-4.columns
+    ' Sort
+    = select_tag(:sort, options_for_select(["rating", "article count"]))
+    = select_tag(:direction, options_for_select(%w(desc asc)))
+  .form-actions
+    = submit_tag "Filter", name: nil

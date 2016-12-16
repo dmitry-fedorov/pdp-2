@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
 
   expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
   expose :companies, -> { Company.all.includes(:owner) }
-  expose :users, -> { company_users.sort_by { |user| user.decorate.average_rating }.reverse }
+  expose :users, -> { company_users }
   expose :invites, -> { Invite.where(user: current_user, status: %w(0 1)) }
 
   def index
@@ -54,14 +54,29 @@ class CompaniesController < ApplicationController
   end
 
   def company_users
-    if params[:search]
-      search(params[:search])
-    else
-      company.users
+    users = company.users
+    %i(search filter sort).each do |filter|
+      users = send(filter, params[filter], users) if params[filter]
     end
+
+    users
   end
 
-  def search(query)
-    company.users.where("full_name LIKE ? OR email LIKE ?", "%#{query}%", "%#{query}%")
+  def search(query, users)
+    users.where("full_name LIKE ? OR email LIKE ?", "%#{query}%", "%#{query}%")
+  end
+
+  def filter(query, users)
+    users.select { |user| user.decorate.average_rating.to_i >= query.to_i }
+  end
+
+  def sort(query, users)
+    users = if query == "rating"
+      users.sort_by { |user| user.decorate.average_rating }
+    elsif query == "article count"
+      users.sort_by { |user| user.articles.count }
+    end
+    users = users.reverse if params[:direction] == "desc"
+    users
   end
 end

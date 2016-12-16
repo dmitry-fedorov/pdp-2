@@ -12,7 +12,7 @@ feature "Search users" do
 
   scenario "User search himself" do
     fill_in "search", with: current_user.email
-    click_on "Search"
+    click_on "Filter"
 
     expect(page).to have_content(current_user.full_name)
     expect(page).not_to have_content(user.full_name)
