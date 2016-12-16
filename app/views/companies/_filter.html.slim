@@ -1,0 +1,10 @@
+h3 Filters:
+= form_tag(company_path(company), method: :get) do
+  .form_inputs.medium-6.columns
+    ' Search
+    = text_field_tag :search
+  .form_inputs.medium-6.columns
+    ' Minimal rating
+    = text_field_tag :filter
+  .form-actions
+    = submit_tag "Filter", name: nil

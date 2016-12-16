@@ -54,14 +54,19 @@ class CompaniesController < ApplicationController
   end
 
   def company_users
-    if params[:search]
-      search(params[:search])
-    else
-      company.users
+    users = company.users
+    %i(search filter sort).each do |filter|
+      users = send(filter, params[filter], users) if params[filter]
     end
+
+    users
   end
 
-  def search(query)
-    company.users.where("full_name LIKE ? OR email LIKE ?", "%#{query}%", "%#{query}%")
+  def search(query, users)
+    users.where("full_name LIKE ? OR email LIKE ?", "%#{query}%", "%#{query}%")
+  end
+
+  def filter(query, users)
+    users.select { |user| user.decorate.average_rating.to_i >= query.to_i }
   end
 end
