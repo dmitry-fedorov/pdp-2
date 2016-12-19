@@ -11,7 +11,7 @@ class UserDecorator < ApplicationDecorator
     if ratings.present?
       ratings.average(:avg).round(2).to_digits
     else
-      "-"
+      0
     end
   end
 end

@@ -54,8 +54,8 @@ class CompaniesController < ApplicationController
   end
 
   def company_users
-    users = company.users
-    %i(search filter sort).each do |filter|
+    users = sort(params[:sort])
+    %i(search filter).each do |filter|
       users = send(filter, params[filter], users) if params[filter]
     end
 
@@ -70,13 +70,13 @@ class CompaniesController < ApplicationController
     users.select { |user| user.decorate.average_rating.to_i >= query.to_i }
   end
 
-  def sort(query, users)
-    users = if query == "rating"
-      users.sort_by { |user| user.decorate.average_rating }
-    elsif query == "article count"
-      users.sort_by { |user| user.articles.count }
+  def sort(query)
+    users = if query == "article count"
+      company.article_count(params[:direction])
+    else
+      company.average_rating(params[:direction])
     end
-    users = users.reverse if params[:direction] == "desc"
+
     users
   end
 end
