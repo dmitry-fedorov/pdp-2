@@ -8,4 +8,19 @@ class Company < ActiveRecord::Base
   validates :domain, format: /\A[a-z0-9]+(_{1}[a-z0-9]+)*$\z/, length: { maximum: 63 }
 
   delegate :full_name, to: :owner, prefix: true
+
+  def average_rating(direction)
+    direction ||= "desc"
+    users
+      .joins("LEFT JOIN articles ON articles.user_id = users.id")
+      .joins("LEFT JOIN rating_caches rc ON articles.id = rc.cacheable_id")
+      .group(:id).order("AVG(avg) #{direction}")
+  end
+
+  def article_count(direction)
+    users
+      .joins("LEFT JOIN articles ON articles.user_id = users.id")
+      .joins("LEFT JOIN rating_caches rc ON articles.id = rc.cacheable_id")
+      .group(:id).order("articles.count #{direction}, AVG(avg) DESC")
+  end
 end
