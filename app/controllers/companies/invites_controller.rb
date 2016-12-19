@@ -6,7 +6,7 @@ module Companies
     def create
       set_invite_params
       invite.save
-      InviteMailer.send_to_owner(company, current_user, invite).deliver_now!
+      InviteMailer.company_registration(company, current_user, invite).deliver_now!
 
       respond_with invite, location: companies_url(subdomain: nil)
     end

@@ -1,7 +1,7 @@
 - if user_signed_in? && current_user.company
   = render "current_company", prefix: "Your", company: current_user.company
-- elsif invites.present?
-  = render "current_company", prefix: "Pending", company: invites.last.company
+- elsif invite.present?
+  = render "current_company", prefix: "Pending", company: invite.company
 
 .row
   h1 align="center" Companies
@@ -10,7 +10,7 @@
     .large-3.medium-6.columns
       h3 = link_to company.name, company_users_url(subdomain: company.domain)
       = "Owner: #{company.owner_full_name}"
-      - if user_signed_in? && current_user.company.blank? && invites.blank?
+      - if user_signed_in? && current_user.company.blank? && invite.blank?
         br
         = link_to "Send request", company_invites_path(company), method: :post
 

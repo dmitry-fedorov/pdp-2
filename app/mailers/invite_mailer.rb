@@ -1,5 +1,5 @@
 class InviteMailer < ApplicationMailer
-  def send_to_owner(company, user, invite)
+  def company_registration(company, user, invite)
     @company = company
     @user = user
     @invite = invite

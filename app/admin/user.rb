@@ -22,7 +22,7 @@ ActiveAdmin.register User do
     actions
   end
 
-  form do |_|
+  form do
     semantic_errors
 
     inputs "Details" do
