@@ -1,9 +1,5 @@
 class FilterUsers
-  include Interactor
+  include Interactor::Organizer
 
-  delegate :query, :users, to: :context
-
-  def call
-    context.users = users.select { |user| user.decorate.average_rating.to_i >= query.to_i }
-  end
+  organize SortUsers, SearchUsers, FilterUsersByRating
 end

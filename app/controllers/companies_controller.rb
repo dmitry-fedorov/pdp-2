@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
 
   expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
   expose :companies, -> { Company.all.includes(:owner) }
-  expose :users, -> { FilterUsers.call(query: params[:filter], users: company_users).users }
+  expose :users, -> { company_users }
   expose :invite, -> { Invite.where(user: current_user, status: 0).last }
 
   def index
@@ -58,7 +58,12 @@ class CompaniesController < ApplicationController
   end
 
   def company_users
-    users = SortUsers.call(sort: params[:sort], direction: params[:direction], company: company).users
-    SearchUsers.call(query: params[:search], users: users).users
+    FilterUsers.call(
+      sort: params[:sort],
+      direction: params[:direction],
+      search: params[:search],
+      filter: params[:filter],
+      company: company
+    ).users
   end
 end
