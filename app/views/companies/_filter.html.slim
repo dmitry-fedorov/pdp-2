@@ -2,13 +2,13 @@ h3 Filters:
 = form_tag(company_path(company), method: :get) do
   .form_inputs.medium-4.columns
     = label_tag "Search"
-    = text_field_tag :search
+    = text_field_tag :search, params[:search]
   .form_inputs.medium-4.columns
     = label_tag "Minimal rating"
-    = text_field_tag :filter
+    = text_field_tag :filter, params[:filter]
   .form_inputs.medium-4.columns
     ' Sort
-    = select_tag(:sort, options_for_select(["rating", "article count"]))
-    = select_tag(:direction, options_for_select(%w(desc asc)))
+    = select_tag(:sort, options_for_select(["rating", "article count"], params[:sort]))
+    = select_tag(:direction, options_for_select(%w(desc asc), params[:direction]))
   .form-actions
     = submit_tag "Filter", name: nil

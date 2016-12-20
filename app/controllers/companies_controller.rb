@@ -18,8 +18,12 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    company.owner = current_user
-    current_user.update(company: company) if company.save
+    result = CreateCompany.call(
+      owner: current_user,
+      name: params[:company][:name],
+      domain: params[:company][:domain]
+    )
+    company = result.company
 
     respond_with company, location: company_users_url(subdomain: company.domain)
   end
