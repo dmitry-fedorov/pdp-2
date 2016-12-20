@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
 
   expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
   expose :companies, -> { Company.all.includes(:owner) }
-  expose :users, -> { company_users }
+  expose :users, -> { FilterUsers.call(query: params[:filter], users: company_users).users }
   expose :invite, -> { Invite.where(user: current_user, status: 0).last }
 
   def index
@@ -58,29 +58,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_users
-    users = sort(params[:sort])
-    %i(search filter).each do |filter|
-      users = send(filter, params[filter], users) if params[filter]
-    end
-
-    users
-  end
-
-  def search(query, users)
-    users.where("full_name LIKE ? OR email LIKE ?", "%#{query}%", "%#{query}%")
-  end
-
-  def filter(query, users)
-    users.select { |user| user.decorate.average_rating.to_i >= query.to_i }
-  end
-
-  def sort(query)
-    users = if query == "article count"
-      company.article_count(params[:direction])
-    else
-      company.average_rating(params[:direction])
-    end
-
-    users
+    users = SortUsers.call(sort: params[:sort], direction: params[:direction], company: company).users
+    SearchUsers.call(query: params[:search], users: users).users
   end
 end
