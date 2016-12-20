@@ -7,7 +7,6 @@ module Articles
     expose :comment
 
     def create
-      comment.article = article
       comment.user = current_user
       comment.save
 
@@ -31,7 +30,7 @@ module Articles
     end
 
     def comment_params
-      params.require(:comment).permit(:text)
+      params.require(:comment).permit(:text).merge(article_id: article.id)
     end
   end
 end

@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
   before_action :authorize_user_management!, only: %i(edit update destroy)
   before_action :authorize_user_creation!, only: %i(new create)
 
-  expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new(company_params) }
+  expose :company, -> { Company.find_by(domain: request.subdomain) || Company.new }
   expose :companies, -> { Company.all.includes(:owner) }
   expose :users, -> { company_users }
   expose :invite, -> { Invite.where(user: current_user, status: 0).last }
@@ -54,7 +54,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.fetch(:company, {}).permit(:name, :domain)
+    params.fetch(:company).permit(:name, :domain)
   end
 
   def company_users
