@@ -19,7 +19,6 @@ class ArticlesController < ApplicationController
 
   def create
     article.user = current_user
-    article.company = company
     if article.save
       respond_with article, location: article_path(article)
     else
@@ -54,6 +53,8 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:name, :text)
+    params.require(:article)
+          .permit(:name, :text)
+          .merge(company_id: company.id)
   end
 end

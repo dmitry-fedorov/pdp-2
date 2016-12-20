@@ -4,28 +4,19 @@ module Companies
     expose :invite
 
     def create
-      set_invite_params
-      invite.save
-      InviteMailer.send_to_owner(company, current_user, invite).deliver_now!
+      result = InviteUser.call(user: current_user, company: company)
 
-      respond_with invite, location: companies_url(subdomain: nil)
+      if result.success?
+        redirect_to companies_url(subdomain: nil), notice: "Invite was successfully created"
+      else
+        respond_with result.invite
+      end
     end
 
     def invitation
-      invite.update(status: params[:status])
-      update_user
-    end
+      result = RecieveInvitation.call(status: params[:status], company: company, invite: invite)
 
-    private
-
-    def set_invite_params
-      invite.company = company
-      invite.user = current_user
-    end
-
-    def update_user
-      if params[:status] == "accepted"
-        invite.user.update(company: company)
+      if result.success?
         redirect_to company_users_url(subdomain: company.domain), notice: "User was successfully invited"
       else
         redirect_to companies_url(subdomain: nil), notice: "User invitation was declined"
