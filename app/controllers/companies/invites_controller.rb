@@ -13,7 +13,7 @@ module Companies
       end
     end
 
-    def invitation
+    def show
       result = RecieveInvitation.call(status: params[:status], company: company, invite: invite)
 
       if result.success?

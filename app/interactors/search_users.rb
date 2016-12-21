@@ -4,6 +4,6 @@ class SearchUsers
   delegate :search, :users, to: :context
 
   def call
-    context.users = users.where("full_name LIKE ? OR email LIKE ?", "%#{search}%", "%#{search}%")
+    context.users = users.find_by_name_or_email(search)
   end
 end

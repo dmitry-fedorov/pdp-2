@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   responders :flash
   respond_to :html
 
-  def admin_access_denied(exception)
+  def admin_access_denied!(exception)
     redirect_to root_path, alert: exception.message
   end
 

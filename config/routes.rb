@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   resources :companies, only: %i(index new create) do
-    resources :invites, only: :create, module: "companies"
-    get "invitation", to: "companies/invites#invitation"
+    resources :invites, only: %i(show create), module: "companies"
   end
 
   constraints Subdomain do
