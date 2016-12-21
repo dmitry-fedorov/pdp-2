@@ -49,7 +49,7 @@ class ArticlesController < ApplicationController
   end
 
   def authorize_domain!
-    authorize(company, :company_user?)
+    authorize(company, :show?)
   end
 
   def article_params

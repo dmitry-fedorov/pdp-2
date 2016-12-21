@@ -7,7 +7,7 @@ class CompanyPolicy < ApplicationPolicy
     user.company.blank?
   end
 
-  def company_user?
+  def show?
     record == user.company
   end
 end

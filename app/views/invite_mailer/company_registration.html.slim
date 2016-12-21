@@ -2,6 +2,6 @@
 br
 = "Click on the link below if you want to invite him or decline invitation"
 br
-= link_to "Invite user", company_invitation_url(@company, invite_id: @invite.id, status: :accepted)
+= link_to "Invite user", company_invite_url(@company, @invite, status: :accepted)
 br
-= link_to "Decline invitation", company_invitation_url(@company, invite_id: @invite.id, status: :declined)
+= link_to "Decline invitation", company_invite_url(@company, @invite, status: :declined)

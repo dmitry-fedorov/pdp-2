@@ -9,9 +9,9 @@ class SortUsers
 
   def sort_users
     if sort == "article count"
-      company.article_count(direction)
+      company.users_article_count(direction)
     else
-      company.average_rating(direction)
+      company.users_average_rating(direction)
     end
   end
 end

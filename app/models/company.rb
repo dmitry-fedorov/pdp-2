@@ -9,7 +9,7 @@ class Company < ActiveRecord::Base
 
   delegate :full_name, to: :owner, prefix: true
 
-  def average_rating(direction)
+  def users_average_rating(direction)
     direction ||= "desc"
     users
       .joins("LEFT JOIN articles ON articles.user_id = users.id")
@@ -17,7 +17,7 @@ class Company < ActiveRecord::Base
       .group(:id).order("coalesce(AVG(avg), 0) #{direction}")
   end
 
-  def article_count(direction)
+  def users_article_count(direction)
     users
       .joins("LEFT JOIN articles ON articles.user_id = users.id")
       .joins("LEFT JOIN rating_caches rc ON articles.id = rc.cacheable_id")
