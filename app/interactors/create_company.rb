@@ -8,13 +8,13 @@ class CreateCompany
   end
 
   def created_company
-    @created_company = Company.create(name: name, domain: domain, owner: owner)
-    if @created_company
-      owner.update(company: @created_company)
+    created_company = Company.create(name: name, domain: domain, owner: owner)
+    if created_company
+      owner.update(company: created_company)
     else
       context.fail!
     end
 
-    @created_company
+    created_company
   end
 end
