@@ -6,7 +6,6 @@ h2 = link_to article.name, article_path(article)
   = article.user.full_name
   = " at #{article.created_at.to_s(:short)}"
   br
-  = rating_for article, "assessment"
 - if policy(article).manage?
   .links
     => link_to "Edit", edit_article_path(article)

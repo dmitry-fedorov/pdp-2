@@ -43,14 +43,16 @@ ActiveRecord::Schema.define(version: 20161214123842) do
   add_index "articles", ["company_id"], name: "index_articles_on_company_id", using: :btree
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
-  create_table "average_caches", force: :cascade do |t|
-    t.integer  "rater_id"
-    t.integer  "rateable_id"
-    t.string   "rateable_type"
-    t.float    "avg",           null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "assessments", force: :cascade do |t|
+    t.integer  "assessment", null: false
+    t.integer  "article_id", null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  add_index "assessments", ["article_id"], name: "index_assessments_on_article_id", using: :btree
+  add_index "assessments", ["user_id"], name: "index_assessments_on_user_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.string   "text",       null: false
@@ -84,39 +86,6 @@ ActiveRecord::Schema.define(version: 20161214123842) do
   add_index "invites", ["company_id"], name: "index_invites_on_company_id", using: :btree
   add_index "invites", ["user_id"], name: "index_invites_on_user_id", using: :btree
 
-  create_table "overall_averages", force: :cascade do |t|
-    t.integer  "rateable_id"
-    t.string   "rateable_type"
-    t.float    "overall_avg",   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "rates", force: :cascade do |t|
-    t.integer  "rater_id"
-    t.integer  "rateable_id"
-    t.string   "rateable_type"
-    t.float    "stars",         null: false
-    t.string   "dimension"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "rates", ["rateable_id", "rateable_type"], name: "index_rates_on_rateable_id_and_rateable_type", using: :btree
-  add_index "rates", ["rater_id"], name: "index_rates_on_rater_id", using: :btree
-
-  create_table "rating_caches", force: :cascade do |t|
-    t.integer  "cacheable_id"
-    t.string   "cacheable_type"
-    t.float    "avg",            null: false
-    t.integer  "qty",            null: false
-    t.string   "dimension"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "rating_caches", ["cacheable_id", "cacheable_type"], name: "index_rating_caches_on_cacheable_id_and_cacheable_type", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -145,6 +114,8 @@ ActiveRecord::Schema.define(version: 20161214123842) do
 
   add_foreign_key "articles", "companies"
   add_foreign_key "articles", "users"
+  add_foreign_key "assessments", "articles"
+  add_foreign_key "assessments", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
 end
