@@ -14,6 +14,7 @@ gem "jquery-rails"
 gem "premailer-rails"
 gem "sass-rails", "~> 5.0.0"
 gem "skim"
+gem "rails-assets-jquery-raty", source: "https://rails-assets.org"
 gem "therubyracer", platforms: :ruby
 gem "uglifier", ">= 2.7.2"
 

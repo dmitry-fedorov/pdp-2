@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   constraints Subdomain do
     root to: "companies#show", as: :company_users
 
+    resources :assessments, only: :create
     resources :articles do
       resources :comments, only: %i(create update destroy), module: :articles
     end

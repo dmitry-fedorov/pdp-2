@@ -5,6 +5,7 @@ h2 = link_to article.name, article_path(article)
   ' Published by
   = article.user.full_name
   = " at #{article.created_at.to_s(:short)}"
+  .assessment (data-behavior="assessment", data-article-id=article.id)
   br
 - if policy(article).manage?
   .links

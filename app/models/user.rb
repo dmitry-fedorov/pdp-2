@@ -12,6 +12,6 @@ class User < ActiveRecord::Base
 
   enum role: %i(user admin)
 
-  scope :find_by_name_or_email, ->(search) { where("full_name LIKE ? OR email LIKE ?", "%#{search}%", "%#{search}%") }
-  scope :filter_by_rating, ->(filter) { having("coalesce(AVG(avg), 0) >= ?", filter) }
+  #scope :find_by_name_or_email, ->(search) { where("full_name LIKE ? OR email LIKE ?", "%#{search}%", "%#{search}%") }
+  #scope :filter_by_rating, ->(filter) { having("coalesce(AVG(avg), 0) >= ?", filter) }
 end
