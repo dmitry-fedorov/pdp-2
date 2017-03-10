@@ -1,7 +1,0 @@
-.comment-form (data-behavior="comment-form")
-  = simple_form_for [article, comment], remote: true do |f|
-    .form-inputs
-      = f.input :text, required: true
-
-    .form-actions
-      = f.button :submit, "Add comment"

@@ -1,0 +1,15 @@
+h3 Comments
+.comments-container (data-fragment-id="comments" data-behavior='comments')
+  = render comments
+  - if user_signed_in?
+
+    h3 Add comment
+    = render "comments/form"
+
+  - else
+    | Please
+    '
+    = active_link_to "Sign in ", new_user_session_path
+    | to add comments
+    br
+  = link_to "Back", articles_path

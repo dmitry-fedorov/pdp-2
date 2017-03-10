@@ -1,0 +1,16 @@
+.comment-wrapper (data-behavior="comment-wrapper", data-fragment-id=comment)
+  strong Comment:
+  p = comment.text
+  ' Published by
+  => comment.user.full_name
+  = "at #{comment.created_at.to_s(:short)}"
+  br
+
+  - if user_signed_in? && policy(comment).manage?
+    => link_to "Edit", "javascript:;", data: { id: comment.id, behavior: "comment-edit" }
+    = link_to "Delete", article_comment_path(article, comment), class: "comment-destroy",
+    data: { id: comment.id, behavior: "fragments", remote: true, method: :delete }
+    br
+
+    = render "comments/edit_form", comment: comment
+  br

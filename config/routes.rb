@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     root to: "companies#show", as: :company_users
 
     resources :articles do
-      resources :comments, only: %i(create update destroy), module: :articles
+      resources :comments, only: %i(create update destroy)
     end
     resources :companies, only: %i(show edit update destroy)
   end

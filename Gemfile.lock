@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/fs/fragments.js.git
+  revision: 4d786b7a53ccc487dec3008e789aaaf14b8b0c5d
+  specs:
+    fragments.js (0.0.1)
+
+GIT
   remote: https://github.com/activeadmin/activeadmin
   revision: 4f494073c6c0c016ba4902faad65f07ee034bb1a
   specs:
@@ -463,6 +469,7 @@ DEPENDENCIES
   formulaic
   foundation-icons-sass-rails
   foundation-rails
+  fragments.js!
   google-analytics-rails
   health_check
   inky-rb

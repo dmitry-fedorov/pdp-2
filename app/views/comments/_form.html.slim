@@ -1,0 +1,7 @@
+.comment-form
+  = simple_form_for [article, comment], data: { remote: true, behavior: "fragments" } do |f|
+    .form-inputs
+      = f.input :text, required: true
+
+    .form-actions
+      = f.button :submit

@@ -1,0 +1,8 @@
+.edit-comment-form (data-behavior="comment-update" data-fragment-id="edit_form" data-id=comment.id)
+  a.edit-comment-button (data-behavior="cancel-link", data-id=comment.id) Cancel
+  = simple_form_for [article, comment], data: { remote: true, method: :patch, behavior: "fragments" } do |f|
+    .form-inputs
+      = f.input :text, required: true
+
+    .form-actions
+      = f.button :submit, data: { id: comment.id }
