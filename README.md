@@ -3,11 +3,6 @@
 
 pdp-2 is written on [rails-base](https://github.com/fs/rails-base) using most gems from there.
 
-## Staging
-
-http://dimafed-pdp-2.tk
-
-
 ## Credits
 
 Blog is created by [Dmitry Fedorov](https://github.com/dmitry-fedorov/).
